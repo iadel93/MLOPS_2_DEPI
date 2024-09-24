@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -37,3 +37,12 @@ jobs:
     - name: Test with pytest
       run: |
         pytest ./test.py
+
+    - name: Set status to "success" (if tests pass)
+      if: success()
+      run: exit 0
+
+    - name: Set status to "failure" (if tests fail)
+      if: failure()
+      run: exit 1
+      
